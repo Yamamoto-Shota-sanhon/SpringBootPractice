@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,10 +62,18 @@ public class EditController {
 
     //編集したデータを渡す
     @PostMapping("/admin/contacts/{id}/edit")
-    public String saveEditContact(@PathVariable Long id, @ModelAttribute("editForm") EditForm editForm) {
-        contactService.updateContact(editForm); // サービスにエディットフォームのデータを渡す
-        return "redirect:/admin/contacts"; // 編集後は一覧へ
+    public String saveEditContact(@PathVariable Long id, @Valid @ModelAttribute("editForm") EditForm editForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("editForm", editForm);
+            model.addAttribute("contactId", id);
+            return "edit"; //エラー時編集ページへ戻る
+        }
+        
+        contactService.updateContact(editForm); //データを更新
+        return "redirect:/admin/contacts"; //更新後一覧ページへ
     }
+
+
 
     //登録内容の削除
     @PostMapping("/admin/contacts/{id}/delete")
