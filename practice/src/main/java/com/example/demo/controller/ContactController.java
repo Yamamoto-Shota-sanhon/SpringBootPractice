@@ -22,6 +22,7 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
+    //お問合せページへ
     @GetMapping("/contact")
     public String contact(Model model) {
         model.addAttribute("contactForm", new ContactForm());
@@ -29,6 +30,7 @@ public class ContactController {
         return "contact";
     }
 
+    //お問い合わせ内容をフォームに登録
     @PostMapping("/contact")
     public String contact(@Validated @ModelAttribute("contactForm") ContactForm contactForm, BindingResult errorResult,
             HttpServletRequest request) {
@@ -43,6 +45,7 @@ public class ContactController {
 
     }
 
+    //お問い合わせ内容の確認
     @GetMapping("/contact/confirm")
     public String confirm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -52,6 +55,7 @@ public class ContactController {
         return "confirmation";
     }
 
+    //お問合せ内容の保存
     @PostMapping("/contact/register")
     public String register(Model model, HttpServletRequest request) {
 
@@ -63,6 +67,7 @@ public class ContactController {
         return "redirect:/contact/complete";
     }
 
+    //お問い合わせ完了画面へ
     @GetMapping("/contact/complete")
     public String complete(Model model, HttpServletRequest request) {
 
@@ -78,4 +83,5 @@ public class ContactController {
 
         return "completion";
     }
+
 }

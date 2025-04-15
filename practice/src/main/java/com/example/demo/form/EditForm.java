@@ -10,7 +10,10 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class ContactForm implements Serializable {
+public class EditForm implements Serializable {
+
+    private Long id;
+    
     @NotBlank
     private String lastName;
 
@@ -18,7 +21,7 @@ public class ContactForm implements Serializable {
     private String firstName;
 
     @NotBlank
-      @Email
+    @Email
     private String email;
 
     @NotBlank
@@ -40,5 +43,7 @@ public class ContactForm implements Serializable {
 
     @NotBlank
     private String body;
-}
 
+
+    
+}
